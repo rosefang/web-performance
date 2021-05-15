@@ -1,0 +1,45 @@
+<!--
+ * @Author: rosefang
+ * @Date: 2020-11-07 10:34:47
+ * @LastEditTime: 2021-02-19 18:13:41
+ * @Description: 当改变father和child的样式时，由于father已经被提升为合成层，所以改变father的transform属性，不需要paint和rasterize，
+    只需要在composite合成参数即可。但是child由于不是合成层，还是会被重绘。由此可见，“修改opacity、transform这两个属性仅仅会触发合成，不会触发重绘和合成。”
+    这个结论，只有在该元素已经是合成层是才成立。
+    因此“尽量使用transform和opacity来完成动画”是有前提的，是合成层才可以来进行优化。
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>合成层提升元素</title></title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+      #father {
+        will-change: transform;
+        height: 50px;
+        background-color: #ccc;
+      }
+      #child {
+        height: 50px;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="father">父元素 提升为合成层
+      
+    </div>
+    <div id="child">子元素 未提升为合成层</div>
+    <br/><br/><br/>
+    <button onClick="changeTargetStyle()">clickme</button>
+  </body>
+  <script>
+    function changeTargetStyle() {
+      var father = document.getElementById("father");
+      father.style.backgroundColor = '#fbfa60';
+      father.style.transform = 'translate(200px)';
+      var child = document.getElementById("child");
+      child.style.transform = 'translate(200px)';
+      child.style.backgroundColor = '#939393';
+    }
+  </script>
+</html>

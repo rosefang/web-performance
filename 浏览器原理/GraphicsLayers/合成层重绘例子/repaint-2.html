@@ -1,0 +1,30 @@
+<!--
+ * @Author: rosefang
+ * @Date: 2020-11-07 10:34:47
+ * @LastEditTime: 2021-02-19 17:53:46
+ * @Description: ab-right元素没有被提升为合成层，所以当改变#target元素的时候，.ab-right元素也会被重绘
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>同一合成层的元素都会被重绘</title></title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+      .ab-right {
+        position: absolute;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="target">hello world</div>
+    <div class="ab-right">我是漂浮在右边的绝对定位元素</div>
+    <button onClick="changeTargetStyle()">clickme</button>
+  </body>
+  <script>
+    function changeTargetStyle() {
+      var target = document.getElementById("target");
+      target.style.backgroundColor = 'red';
+    }
+  </script>
+</html>
